@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const saucesRoutes = require('./routes/sauces');
 const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/User');
-const path = require('path');
+const path = require('index');
 
 // Installation mongoose-----------------------------------------------------
 const mongoose = require('mongoose');
@@ -20,12 +20,19 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(bodyParser.json());
+// Transforme json bodyparser en objet javascript
+app.use(bodyParser.json())
 
+// Middleware pour répondre aux requêtes envoyé aux images
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('api/auth', authRoutes);
-app.use('api/User', userRoutes);
-app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use('api/sauces', saucesRoutes);
+
+
+
+
 
 
 module.exports = app;
